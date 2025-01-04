@@ -43,7 +43,7 @@ export default function Product({
                 src={imageUrl}
                 alt={imageAlt}
                 className="rounded-xs object-cover"
-                layout="fill"
+                fill
               />
             </AspectRatio>
           </div>
