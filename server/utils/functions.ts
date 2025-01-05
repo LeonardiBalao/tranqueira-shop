@@ -1,7 +1,3 @@
-export const treatTestamentSlug = (slug: string) => {
-  return slug.split("-")[0].toUpperCase();
-};
-
 export function generateSlug(text: string): string {
   const accentsMap = new Map<string, string>([
     ["á", "a"],
@@ -67,7 +63,8 @@ export function generateSlug(text: string): string {
   return slug;
 }
 
-export const fetchAI = async (prompt: string) => {
+export const fetchAI = async (prompt: string, type: string) => {
+  console.log(`Gerando ${type}`);
   const url = "http://147.79.82.202:11434/api/generate";
   const promptData = {
     model: "llama3:8b",
@@ -97,9 +94,15 @@ export const fetchAI = async (prompt: string) => {
     const lines = chunk.split("\n").filter(Boolean); // Split by new lines and filter out empty lines
     for (const line of lines) {
       try {
-        const json = JSON.parse(line);
-        if (json.response) {
-          result += json.response;
+        // console.log("Parsing line:", line); // Add this line to log the content
+        if (line.trim().startsWith("{") && line.trim().endsWith("}")) {
+          // Check if the line looks like a JSON object
+          const json = JSON.parse(line);
+          if (json.response) {
+            result += json.response;
+          }
+        } else {
+          console.warn("Skipping invalid JSON."); // Warn about invalid JSON lines
         }
       } catch (e) {
         console.error("Failed to parse JSON:", e);

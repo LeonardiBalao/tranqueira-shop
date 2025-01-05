@@ -1,15 +1,15 @@
 import CarouselHero from "@/components/structure/carousel-hero";
 import Navbar from "@/components/structure/navbar";
 import SearchBar from "@/components/structure/search-bar";
-import { auth } from "@/server/auth";
+import { getReviews } from "@/server/actions/get-reviews";
 
 export default async function Home() {
-  const session = await auth();
+  const allReviews = await getReviews();
   return (
     <>
-      <Navbar user={session?.user} />
-      <SearchBar className="mb-12" />
-      <CarouselHero />
+      <Navbar />
+      <SearchBar className="mb-8" />
+      <CarouselHero allReviews={allReviews} />
     </>
   );
 }

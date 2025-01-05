@@ -12,8 +12,8 @@ export default function SearchBar({ className }: SearchBarProps) {
     <div className={`items-center flex justify-center ${className} w-[240px]`}>
       <Input
         type="text"
-        placeholder="Pesquisar"
-        className="w-full border border-gray-300 rounded-lg p-2"
+        placeholder="Pesquisar reviews"
+        className="w-full border border-gray-300 rounded-lg px-8"
       />
       <Search className="-ml-8" color="gray" />
     </div>

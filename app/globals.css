@@ -58,3 +58,25 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+.single-review h2,
+.single-review h3,
+.single-review h4,
+.single-review h5 {
+  padding: 12px 0;
+  font: bold;
+  text-transform: uppercase;
+}
+
+ul {
+  list-style: circle;
+  padding-left: 24px;
+}
+
+li {
+  line-height: 32px;
+}
+
+strong {
+  font: bold;
+}

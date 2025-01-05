@@ -2,25 +2,14 @@
 
 import logo from "@/public/logo.jpg";
 import Image from "next/image";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../ui/drawer";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
-import AuthCard from "@/app/auth/login/auth-card";
-import LoadingButton from "./loading-button";
-import { ExtendUser } from "@/types/next-auth";
 
-interface NavbarProps {
-  user: ExtendUser | undefined;
-}
+// interface NavbarProps {
+//   user: ExtendUser | undefined;
+// }
 
-export default function Navbar({ user }: NavbarProps) {
+export default function Navbar() {
   return (
-    <nav className="w-full flex justify-center container flex-col my-4">
+    <nav className="w-full flex justify-center container mt-4 fixed top-0">
       <div className="w-full mx-auto">
         <Image
           src={logo}
@@ -30,7 +19,7 @@ export default function Navbar({ user }: NavbarProps) {
           className="rounded-full mx-auto border-4 border-primary"
         />
       </div>
-      <div className="flex justify-center my-8">
+      {/* <div className="flex justify-center my-4">
         {!user ? (
           <Drawer>
             <DrawerTrigger
@@ -57,7 +46,7 @@ export default function Navbar({ user }: NavbarProps) {
             />
           </div>
         )}
-      </div>
+      </div> */}
     </nav>
   );
 }

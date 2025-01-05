@@ -8,36 +8,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import Product from "./product";
+import CarouselReview from "./carousel-review";
+import { cn } from "@/lib/utils";
 
-const products = [
-  {
-    title: "Product Title",
-    imageAlt: "Product Image",
-    imageUrl: "https://via.placeholder.com/450x250",
-    description: "Product Description",
-    content: "Product Content",
-    footer: "Product Footer",
-  },
-  {
-    title: "Product Title",
-    imageAlt: "Product Image",
-    imageUrl: "https://via.placeholder.com/450x250",
-    description: "Product Description",
-    content: "Product Content",
-    footer: "Product Footer",
-  },
-  {
-    title: "Product Title",
-    imageAlt: "Product Image",
-    imageUrl: "https://via.placeholder.com/450x250",
-    description: "Product Description",
-    content: "Product Content",
-    footer: "Product Footer",
-  },
-];
+interface CarouselHeroProps {
+  allReviews: ReviewWithPriceAndRatingAsString[];
+}
 
-export default function CarouselHero() {
+export default function CarouselHero({ allReviews }: CarouselHeroProps) {
   const [orientation, setOrientation] = useState<"vertical" | "horizontal">(
     "vertical"
   );
@@ -64,29 +42,22 @@ export default function CarouselHero() {
   }, []);
 
   return (
-    <main className="container px-8 md:px-0">
+    <main className="container px-8 md:px-0 mt-10 md:mt-0">
       <Carousel
         orientation={orientation}
         opts={{
           align: "start",
           loop: true,
         }}
-        className="w-full "
+        className="w-full"
       >
         <CarouselContent>
-          {products.map((item, index) => (
+          {allReviews.map((review: ReviewWithPriceAndRatingAsString, index) => (
             <CarouselItem
               key={index}
-              className={orientation === "vertical" ? "" : "basis-1/3"}
+              className={cn(orientation === "vertical" ? "" : "basis-1/3")}
             >
-              <Product
-                title={item.title}
-                imageUrl={item.imageUrl}
-                imageAlt={item.imageAlt}
-                description={item.description}
-                content={item.content}
-                footer={item.footer}
-              />
+              <CarouselReview review={review} />
             </CarouselItem>
           ))}
         </CarouselContent>

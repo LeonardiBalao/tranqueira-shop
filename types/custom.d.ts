@@ -1,15 +1,10 @@
-export interface Product {
-  name: string;
-  discount: string;
-  price: string;
-  imageAlt: string;
-  imageSrc: string;
-  category1: string;
-  category2: string;
-  category3: string;
-  description: string;
-  affiliateLink: string;
-  rating: string;
-  reviewsAmount: string;
-  ordersAmount: string;
+import { Review } from "@prisma/client";
+declare global {
+  type ReviewWithoutPriceAndRating = Omit<Review, "price" | "rating">;
+  type ReviewWithPriceAndRatingAsString = ReviewWithoutPriceAndRating & {
+    price: string;
+    rating: string;
+  };
 }
+
+export default global;
