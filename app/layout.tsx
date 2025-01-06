@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { Merriweather as FontSans } from "next/font/google";
+import { Montserrat as FontSans } from "next/font/google";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={cn(
-          "flex min-h-svh w-full flex-col justify-center items-center",
+          "flex min-h-svh w-full flex-col items-center justify-center",
           fontSans.className
         )}
       >

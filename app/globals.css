@@ -68,15 +68,19 @@
   text-transform: uppercase;
 }
 
-ul {
+.single-review ul {
   list-style: circle;
   padding-left: 24px;
 }
 
-li {
+.single-review li {
   line-height: 32px;
 }
 
-strong {
+.single-review strong {
   font: bold;
+}
+
+.single-review p {
+  line-height: 32px;
 }

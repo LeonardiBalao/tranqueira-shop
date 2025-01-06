@@ -113,3 +113,12 @@ export const fetchAI = async (prompt: string, type: string) => {
   result += decoder.decode(); // Decode any remaining bytes
   return result;
 };
+
+export function removeFormatting(text: string): string {
+  return text
+    .replaceAll('"', "")
+    .replaceAll("/", "")
+    .replaceAll("\n\n", "")
+    .replaceAll("\n", "")
+    .replaceAll("-", "");
+}

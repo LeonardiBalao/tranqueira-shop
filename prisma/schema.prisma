@@ -92,27 +92,31 @@ model Authenticator {
 }
 
 model Review {
-  id                String   @id @default(uuid())
-  title             String
-  name              String
-  titleSlug         String
-  keywords          String[]
-  metaDescription   String
-  imageAlt          String
-  imageSrc          String
-  discount          Int
-  price             Decimal
-  categoryOne       String
-  categoryOneSlug   String
-  categoryTwo       String
-  categoryTwoSlug   String
-  categoryThree     String?
-  categoryThreeSlug String?
-  review            String
-  reviewHTML        String
-  affiliateLink     String
-  rating            Decimal
-  reviewsAmount     Int
-  ordersAmount      Int
-  createdAt         DateTime @default(now())
+  id                  String   @id @default(uuid())
+  title               String
+  titleSlug           String
+  name                String
+  keywords            String[]
+  metaDescription     String
+  imageAlt            String
+  imageSrc            String
+  videoSrc            String?
+  discount            Int
+  price               Decimal
+  pros                String[]
+  cons                String[]
+  customerExperience  String
+  costBenefit         String
+  finalConsiderations String
+  categoryOne         String
+  categoryOneSlug     String
+  categoryTwo         String
+  categoryTwoSlug     String
+  categoryThree       String?
+  categoryThreeSlug   String?
+  affiliateLink       String
+  rating              Decimal
+  reviewsAmount       Int
+  ordersAmount        Int
+  createdAt           DateTime @default(now())
 }

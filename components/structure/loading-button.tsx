@@ -20,6 +20,7 @@ interface LoadingButtonProps {
     | "link"
     | null
     | undefined;
+  loadingState?: boolean;
   action?: () => void;
 }
 
@@ -27,6 +28,7 @@ export default function LoadingButton({
   text,
   href,
   loadingText,
+  loadingState,
   className,
   size,
   icon,
@@ -34,7 +36,7 @@ export default function LoadingButton({
   action,
 }: LoadingButtonProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(loadingState ? loadingState : false);
 
   const handleSubmit = async () => {
     setLoading(true);
