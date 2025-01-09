@@ -12,7 +12,7 @@ export default function Rating({ review }: RatingProps) {
   const hasHalfStar = parseFloat(review.rating) % 1 !== 0;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
   return (
-    <div className="flex gap-2 items-center justify-center">
+    <div className="flex gap-1 items-center">
       <Badge className="flex gap-1">
         {Array(fullStars)
           .fill(null)
@@ -27,11 +27,11 @@ export default function Rating({ review }: RatingProps) {
           ))}
         {review.rating}
       </Badge>
-      <Badge variant={"outline"} className="text-xs flex gap-2">
-        {review.ordersAmount} vendidos
+      <Badge variant={"outline"} className="text-xs gap-1">
+        {review.ordersAmount}+ vendas
       </Badge>
-      <Badge variant={"outline"} className="text-xs flex gap-2 ">
-        {review.reviewsAmount} avaliados
+      <Badge variant={"outline"} className="text-xs gap-1">
+        {review.reviewsAmount}+ avaliações
       </Badge>
     </div>
   );

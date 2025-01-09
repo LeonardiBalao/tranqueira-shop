@@ -63,11 +63,15 @@ export function generateSlug(text: string): string {
   return slug;
 }
 
-export const fetchAI = async (prompt: string, type: string) => {
+export const fetchAI = async (
+  prompt: string | undefined,
+  type: string | undefined
+) => {
+  if (prompt === undefined || type === undefined) return "";
   console.log(`Gerando ${type}`);
   const url = "http://147.79.82.202:11434/api/generate";
   const promptData = {
-    model: "llama3:8b",
+    model: "qwen2.5:14b",
     prompt,
   };
 
@@ -120,5 +124,14 @@ export function removeFormatting(text: string): string {
     .replaceAll("/", "")
     .replaceAll("\n\n", "")
     .replaceAll("\n", "")
-    .replaceAll("-", "");
+    .replaceAll("-", "")
+    .trim();
 }
+
+export const translatePrompt = async (prompt: string, promptType: string) => {
+  const translation = await fetchAI(
+    `Translate the following text to Brazilian Portuguese: ${prompt}`,
+    promptType
+  );
+  return translation;
+};

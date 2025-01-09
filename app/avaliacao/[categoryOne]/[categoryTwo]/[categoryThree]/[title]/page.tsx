@@ -30,7 +30,7 @@ export default async function SingleReviewPage({ params }: SingleReviewProps) {
   );
   if (!review) return <div>Não encontrado</div>;
   return (
-    <main className="container mx-auto px-8 md:px-0 flex flex-col gap-4 items-center border border-red-500">
+    <main className="container mx-auto px-8 md:px-0 flex flex-col gap-4 items-center my-8">
       <nav className="mr-auto">
         <Breadcrumb>
           <BreadcrumbList>

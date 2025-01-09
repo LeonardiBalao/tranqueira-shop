@@ -2,13 +2,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Link from "next/link";
 import { Button } from "../ui/button";
-import VideoPlayer from "./react-player";
 import Image from "next/image";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { AuthorBox } from "./author-box";
 import Rating from "./rating";
 import { Separator } from "../ui/separator";
 import CardAffiliate from "./card-affiliate";
+import VideoPlayer from "./react-player";
 
 interface SingleReviewProps {
   review: ReviewWithPriceAndRatingAsString;
@@ -40,23 +40,30 @@ export default function SingleReview({ review }: SingleReviewProps) {
         <h2 className="font-bold text-green-700">Pontos positivos</h2>
         <ul>
           {review.pros.map((pro, index) => (
-            <li key={index}>{pro}</li>
+            <li key={index}>{pro.slice(0, 1).toUpperCase() + pro.slice(1)}</li>
           ))}
         </ul>
-        <h2 className="font-bold text-red-500">Pontos negativos</h2>
+        <h2 className="font-bold text-red-600">Pontos negativos</h2>
         <ul>
           {review.cons.map((con, index) => (
             <li key={index}>{con}</li>
           ))}
         </ul>
       </section>
+
+      {review.videoSrc !== null && <VideoPlayer url={review.videoSrc} />}
+      <div className="flex italic w-full justify-center">
+        <span className="-mt-2">
+          Assista ao vídeo acima e conheça o produto na íntegra
+        </span>
+      </div>
       <h2 className="font-bold">Custo-Benefício</h2>
       <p>{review.costBenefit}</p>
       <h2 className="font-bold">Conclusão</h2>
       <p>{review.finalConsiderations}</p>
       <Link href={review.affiliateLink}>
         <Button className="w-full" size={"lg"}>
-          Leve-me para o site
+          Ver produto ma Shopee
         </Button>
       </Link>
     </div>

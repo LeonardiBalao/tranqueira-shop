@@ -4,6 +4,10 @@ import { ThemeProvider } from "next-themes";
 import { Montserrat as FontSans } from "next/font/google";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
+import { Book, LayoutDashboard, User } from "lucide-react";
+import { auth } from "@/server/auth";
+import { ROLE } from "@prisma/client";
+import PanelLinks from "@/components/structure/panel-links";
 
 export const metadata: Metadata = {
   title: "Tranqueira Shop",
@@ -16,11 +20,29 @@ const fontSans = FontSans({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  const userLinks = [
+    { href: "/", label: "Home", icon: <LayoutDashboard size={16} /> },
+    { href: "/painel/usuario", label: "Usuário", icon: <User size={16} /> },
+  ];
+  const adminLinks =
+    session?.user.role === ROLE.ADMIN
+      ? [
+          {
+            href: "/painel/review",
+            label: "Criar Review",
+            icon: <Book size={16} />,
+          },
+        ]
+      : [];
+
+  const allLinks = [...userLinks, ...adminLinks];
+
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body
@@ -35,9 +57,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <PanelLinks allLinks={allLinks} />
           {children}
         </ThemeProvider>
-        <Toaster richColors position="top-center" />
+        <Toaster richColors />
       </body>
     </html>
   );

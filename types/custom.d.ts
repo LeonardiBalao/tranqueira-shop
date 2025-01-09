@@ -21,6 +21,22 @@ declare global {
     reviewsAmount: string;
     ordersAmount: string;
   }
+  interface PromptState {
+    prompt: string;
+    response: string;
+    loading: boolean;
+  }
+
+  interface States {
+    title: PromptState;
+    metaDescription: PromptState;
+    customerExperience: PromptState;
+    pros: PromptState;
+    cons: PromptState;
+    costBenefit: PromptState;
+    finalConsiderations: PromptState;
+    keywords: PromptState;
+  }
 }
 
 export default global;

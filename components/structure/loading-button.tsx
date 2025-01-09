@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +19,8 @@ interface LoadingButtonProps {
     | "link"
     | null
     | undefined;
-  loadingState?: boolean;
+  loadingState: PromptState;
+  setLoadingState: (state: PromptState) => void;
   action?: () => void;
 }
 
@@ -29,6 +29,7 @@ export default function LoadingButton({
   href,
   loadingText,
   loadingState,
+  setLoadingState,
   className,
   size,
   icon,
@@ -36,13 +37,12 @@ export default function LoadingButton({
   action,
 }: LoadingButtonProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(loadingState ? loadingState : false);
 
   const handleSubmit = async () => {
-    setLoading(true);
+    setLoadingState({ ...loadingState, loading: true });
     if (action) {
-      action();
-      return setTimeout(() => setLoading(false), 1000);
+      await action();
+      setLoadingState({ ...loadingState, loading: false });
     }
     if (href) {
       setTimeout(() => {
@@ -51,7 +51,7 @@ export default function LoadingButton({
     }
   };
 
-  if (loading) {
+  if (loadingState.loading) {
     return (
       <Button
         className={`flex gap-4 ${
