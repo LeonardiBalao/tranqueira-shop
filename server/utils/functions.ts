@@ -69,7 +69,7 @@ export const fetchAI = async (
 ) => {
   if (prompt === undefined || type === undefined) return "";
   console.log(`Gerando ${type}`);
-  const url = `http://147.79.82.202:11434/api/generate`;
+  const url = `https://147.79.82.202:11434/api/generate`;
   const promptData = {
     model: "qwen2.5:14b",
     prompt,
@@ -136,3 +136,10 @@ export const translatePrompt = async (prompt: string, promptType: string) => {
   );
   return translation;
 };
+
+export const fetchServerAI = async (
+  prompt: string | undefined,
+  type: string | undefined
+) => {
+  return fetchAI(prompt, type);
+  });
