@@ -64,6 +64,7 @@ export default async function RootLayout({
             width={150}
             height={150}
             className="mt-4"
+            unoptimized
           />
           <PanelLinks allLinks={allLinks} />
           {children}

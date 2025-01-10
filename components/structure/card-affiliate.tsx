@@ -21,6 +21,7 @@ export default function CardAffiliate({ review }: CardAffiliateProps) {
               alt={review.imageAlt}
               className="rounded-md object-cover"
               fill
+              unoptimized
             />
           </AspectRatio>
         </div>

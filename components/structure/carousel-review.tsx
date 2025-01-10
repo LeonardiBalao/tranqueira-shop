@@ -31,6 +31,7 @@ export default function CarouselReview({ review }: ReviewProps) {
                 alt={review.imageAlt}
                 className="rounded-xs object-cover"
                 fill
+                unoptimized
               />
             </AspectRatio>
             <Badge className="font-bold absolute mt-2 mr-2 z-50 bg-blue-400 hover:bg-blue-500 text-sm">
