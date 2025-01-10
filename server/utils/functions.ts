@@ -92,7 +92,7 @@ export const fetchAI = async (
 ) => {
   if (prompt === undefined || type === undefined) return "";
   console.log(`Gerando ${type}`);
-  const url = `${apiURL}:11434/api/generate`;
+  const url = `${apiURL}/api/generate`;
   const promptData = {
     model: "qwen2.5:14b",
     prompt,
