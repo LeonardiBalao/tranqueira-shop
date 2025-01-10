@@ -28,6 +28,7 @@ export default function SingleReview({ review }: SingleReviewProps) {
             className="rounded-2xl object-cover"
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
+            unoptimized
           />
         </AspectRatio>
       </div>
