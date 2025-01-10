@@ -1,6 +1,5 @@
 import SingleReview from "@/components/structure/single-review";
 import { getReview } from "@/server/actions/get-review";
-import { redirect } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,24 +9,26 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Aside from "@/components/structure/aside";
-interface SingleReviewProps {
-  params: {
+
+export default async function SingleReviewPage({
+  params,
+}: {
+  params: Promise<{
     categoryOne: string;
     categoryTwo: string;
     categoryThree: string;
     title: string;
-  };
-}
+  }>;
+}) {
+  const { categoryOne, categoryTwo, categoryThree, title } = await params;
 
-export default async function SingleReviewPage({ params }: SingleReviewProps) {
-  if (!params) return redirect("/");
-  const { categoryOne, categoryTwo, categoryThree, title } = params;
   const review = await getReview(
     categoryOne,
     categoryTwo,
     categoryThree,
     title
   );
+
   if (!review) return <div>Não encontrado</div>;
   return (
     <main className="container mx-auto px-8 md:px-0 flex flex-col gap-4 items-center my-8">
