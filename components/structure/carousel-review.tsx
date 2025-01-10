@@ -33,7 +33,7 @@ export default function CarouselReview({ review }: ReviewProps) {
                 fill
               />
             </AspectRatio>
-            <Badge className="font-extrabold absolute mt-2 mr-2 z-50 bg-blue-400 hover:bg-blue-500 text-sm">
+            <Badge className="font-bold absolute mt-2 mr-2 z-50 bg-blue-400 hover:bg-blue-500 text-sm">
               R$ {review.price.replace(".", ",")}
             </Badge>
           </div>
@@ -41,15 +41,16 @@ export default function CarouselReview({ review }: ReviewProps) {
         <CardContent className="flex flex-col items-center">
           <h2>{review.title.replaceAll('"', "")}</h2>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="w-full">
           <Link
+            className="w-full"
             href={`/avaliacao/${review.categoryOneSlug}/${
               review.categoryTwoSlug
             }${
               review.categoryThreeSlug ? `/${review.categoryThreeSlug}` : ""
             }/${review.titleSlug}`}
           >
-            <Button className="font-extrabold">Ler avaliação</Button>
+            <Button className="font-bold w-full">Ler avaliação</Button>
           </Link>
         </CardFooter>
       </Card>

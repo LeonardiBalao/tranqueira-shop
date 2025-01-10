@@ -1,23 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import LoadingButton from "@/components/structure/loading-button";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { getInitialPrompts } from "@/server/actions/create-review";
-import { fetchAI } from "@/server/utils/functions";
+import {
+  createReview,
+  getInitialPrompts,
+} from "@/server/actions/create-review";
 import { useState } from "react";
 import CurrencyInput from "react-currency-input-field";
+import PromptTemplate from "./prompt-template";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface CreateReviewCardProps {
   className?: string;
@@ -29,45 +32,37 @@ export default function RegisterProductCard({
   const [title, setTitle] = useState({
     prompt: "",
     response: "",
-    loading: false,
   });
   const [metaDescription, setMetaDescription] = useState({
     prompt: "",
     response: "",
-    loading: false,
   });
   const [customerExperience, setCustomerExperience] = useState({
     prompt: "",
     response: "",
-    loading: false,
   });
   const [pros, setPros] = useState<PromptState>({
     prompt: "",
     response: "",
-    loading: false,
   });
   const [cons, setCons] = useState<PromptState>({
     prompt: "",
     response: "",
-    loading: false,
   });
   const [keywords, setKeywords] = useState<PromptState>({
     prompt: "",
     response: "",
-    loading: false,
   });
   const [costBenefit, setCostBenefit] = useState<PromptState>({
     prompt: "",
     response: "",
-    loading: false,
   });
   const [finalConsiderations, setFinalConsiderations] = useState<PromptState>({
     prompt: "",
     response: "",
-    loading: false,
   });
 
-  const [product, setProduct] = useState<Product>({
+  const [form, setForm] = useState<Form>({
     name: "",
     price: "",
     categoryOne: "",
@@ -77,6 +72,8 @@ export default function RegisterProductCard({
     affiliateLink: "",
     imageAlt: "",
     imageSrc: "",
+    imageAlt2: "",
+    imageSrc2: "",
     videoSrc: "",
     rating: "",
     reviewsAmount: "",
@@ -86,7 +83,11 @@ export default function RegisterProductCard({
 
   //
   const fetchPrompts = async () => {
-    const res = await getInitialPrompts(product);
+    const res = await getInitialPrompts(form, {
+      pros: pros.response,
+      cons: cons.response,
+      costBenefit: costBenefit.response,
+    });
     setTitle({ ...title, prompt: res.title });
     setMetaDescription({ ...metaDescription, prompt: res.metaDescription });
     setPros({ ...pros, prompt: res.pros });
@@ -100,42 +101,22 @@ export default function RegisterProductCard({
       ...customerExperience,
       prompt: res.customerExperience,
     });
+    setKeywords({ ...keywords, prompt: res.keywords });
   };
 
-  const handleKey = async (state: PromptState, promptName: keyof States) => {
-    if (
-      !product.name ||
-      !product.description ||
-      !product.discount ||
-      !product.price ||
-      !product.reviewsAmount ||
-      !product.ordersAmount ||
-      !product.rating
-    )
-      return toast.error("Preencher todos os dados do produto antes.");
-    const response = await fetchAI(state.prompt, promptName);
-    switch (promptName) {
-      case "title":
-        setTitle({ ...state, response });
-        break;
-      case "metaDescription":
-        setMetaDescription({ ...state, response });
-        break;
-      case "pros":
-        setPros({ ...state, response });
-        break;
-      case "cons":
-        setCons({ ...state, response });
-        break;
-      case "costBenefit":
-        setCostBenefit({ ...state, response });
-        break;
-      case "finalConsiderations":
-        setFinalConsiderations({ ...state, response });
-        break;
-      case "customerExperience":
-        setCustomerExperience({ ...state, response });
-        break;
+  const handleSubmit = async () => {
+    const newReview = await createReview(form, {
+      title,
+      customerExperience,
+      metaDescription,
+      cons,
+      pros,
+      costBenefit,
+      finalConsiderations,
+      keywords,
+    });
+    if (newReview) {
+      toast.success("Review criada com sucesso");
     }
   };
 
@@ -151,62 +132,38 @@ export default function RegisterProductCard({
           <Input
             placeholder="https://shopee.com.br/%C3%93culos-de-sol-europeus-da-moda-americana"
             type="text"
-            value={product.affiliateLink}
+            value={form.affiliateLink}
             onChange={(e) =>
-              setProduct({ ...product, affiliateLink: e.target.value })
+              setForm({ ...form, affiliateLink: e.target.value })
             }
           />
           <Label>URL da Imagem</Label>
           <Input
             type="text"
             placeholder="URL"
-            value={product.imageSrc}
-            onChange={(e) =>
-              setProduct({ ...product, imageSrc: e.target.value })
-            }
+            value={form.imageSrc}
+            onChange={(e) => setForm({ ...form, imageSrc: e.target.value })}
+          />
+          <Label>URL da Imagem Secundária</Label>
+          <Input
+            type="text"
+            placeholder="URL"
+            value={form.imageSrc2}
+            onChange={(e) => setForm({ ...form, imageSrc2: e.target.value })}
           />
           <Label>URL do Vídeo</Label>
           <Input
             type="text"
             placeholder="URL"
-            value={product.videoSrc}
-            onChange={(e) =>
-              setProduct({ ...product, videoSrc: e.target.value })
-            }
+            value={form.videoSrc}
+            onChange={(e) => setForm({ ...form, videoSrc: e.target.value })}
           />
           <Label>Nome do Produto</Label>
           <Input
             type="text"
             placeholder="Nome do produto"
-            value={product.name}
-            onChange={(e) => setProduct({ ...product, name: e.target.value })}
-          />
-          <Label>Categoria 1</Label>
-          <Input
-            type="text"
-            placeholder="Categoria 1"
-            value={product.categoryOne}
-            onChange={(e) =>
-              setProduct({ ...product, categoryOne: e.target.value })
-            }
-          />
-          <Label>Categoria 2</Label>
-          <Input
-            type="text"
-            placeholder="Categoria 2"
-            value={product.categoryTwo}
-            onChange={(e) =>
-              setProduct({ ...product, categoryTwo: e.target.value })
-            }
-          />
-          <Label>Categoria 3</Label>
-          <Input
-            type="text"
-            placeholder="Categoria 3"
-            value={product.categoryThree}
-            onChange={(e) =>
-              setProduct({ ...product, categoryThree: e.target.value })
-            }
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
           <div className="flex flex-wrap gap-4">
             <div className="flex flex-col gap-4">
@@ -217,10 +174,10 @@ export default function RegisterProductCard({
                 step="0.1"
                 min="1"
                 max="5"
-                value={product.rating}
+                value={form.rating}
                 onChange={(e) =>
-                  setProduct({
-                    ...product,
+                  setForm({
+                    ...form,
                     rating:
                       parseInt(e.target.value) < 1 ||
                       parseInt(e.target.value) > 5
@@ -236,10 +193,10 @@ export default function RegisterProductCard({
                 type="number"
                 placeholder="1000"
                 step="1"
-                value={product.reviewsAmount}
+                value={form.reviewsAmount}
                 onChange={(e) =>
-                  setProduct({
-                    ...product,
+                  setForm({
+                    ...form,
                     reviewsAmount:
                       parseInt(e.target.value) < 0 ? "0" : e.target.value,
                   })
@@ -252,10 +209,10 @@ export default function RegisterProductCard({
                 type="number"
                 placeholder="1000"
                 step="1"
-                value={product.ordersAmount}
+                value={form.ordersAmount}
                 onChange={(e) =>
-                  setProduct({
-                    ...product,
+                  setForm({
+                    ...form,
                     ordersAmount:
                       parseInt(e.target.value) < 0 ? "0" : e.target.value,
                   })
@@ -274,10 +231,10 @@ export default function RegisterProductCard({
                 decimalsLimit={0}
                 suffix="%"
                 className="w-full flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                value={product.discount}
+                value={form.discount}
                 onValueChange={(e) =>
-                  setProduct({
-                    ...product,
+                  setForm({
+                    ...form,
                     discount: parseInt(e!) < 1 || parseInt(e!) > 100 ? "0" : e!,
                   })
                 }
@@ -293,287 +250,109 @@ export default function RegisterProductCard({
                 decimalsLimit={0}
                 prefix="R$ "
                 className="w-full flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                value={product.price}
+                value={form.price}
                 onValueChange={(e) =>
-                  setProduct({
-                    ...product,
+                  setForm({
+                    ...form,
                     price: parseFloat(e!) < 1 ? "1" : e!,
                   })
                 }
               />
             </div>
           </div>
+          <Label>Categoria 1</Label>
+          <Input
+            type="text"
+            placeholder="Categoria 1"
+            value={form.categoryOne}
+            onChange={(e) => setForm({ ...form, categoryOne: e.target.value })}
+          />
+          <Label>Categoria 2</Label>
+          <Input
+            type="text"
+            placeholder="Categoria 2"
+            value={form.categoryTwo}
+            onChange={(e) => setForm({ ...form, categoryTwo: e.target.value })}
+          />
+          <Label>Categoria 3</Label>
+          <Input
+            type="text"
+            placeholder="Categoria 3"
+            value={form.categoryThree}
+            onChange={(e) =>
+              setForm({ ...form, categoryThree: e.target.value })
+            }
+          />
           <Label>Descrição</Label>
           <Textarea
             placeholder="Descrição"
             className="h-40"
-            value={product.description}
-            onChange={(e) =>
-              setProduct({ ...product, description: e.target.value })
-            }
+            value={form.description}
+            onChange={(e) => setForm({ ...form, description: e.target.value })}
           />
-          <Button onClick={() => fetchPrompts()}>Load Prompts</Button>
-          <Label>Prompt de Título</Label>
-          <Textarea
-            placeholder="Prompt de título"
-            className="h-52 bg-secondary"
-            value={title.prompt}
-            onChange={(e) =>
-              setTitle({
-                ...title,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
+          <PromptTemplate
+            state={title}
+            setState={setTitle}
+            stateKey="title"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
-          <div className="flex gap-4 items-center">
-            <LoadingButton
-              text="Criar título"
-              action={() => handleKey(title, "title")}
-              loadingState={title}
-              setLoadingState={setTitle}
-              loadingText="Gerando..."
-            />
-          </div>
-          <Label>Proposta de título</Label>
-          <Textarea
-            placeholder="Resposta de título"
-            className="h-52"
-            value={title.response}
-            onChange={(e) => setTitle({ ...title, response: e.target.value })}
+          <PromptTemplate
+            state={metaDescription}
+            setState={setMetaDescription}
+            stateKey="metaDescription"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
-          <Label>Prompt de Meta descrição</Label>
-          <Textarea
-            placeholder="Prompt de Meta Descrição"
-            className="h-32 bg-secondary"
-            value={metaDescription.prompt}
-            onChange={(e) =>
-              setMetaDescription({
-                ...metaDescription,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
+          <PromptTemplate
+            state={pros}
+            setState={setPros}
+            stateKey="pros"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
-          <LoadingButton
-            text="Criar Meta Descrição"
-            action={() => handleKey(metaDescription, "metaDescription")}
-            loadingState={metaDescription}
-            setLoadingState={setMetaDescription}
-            loadingText="Gerando..."
+          <PromptTemplate
+            state={cons}
+            setState={setCons}
+            stateKey="cons"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
-          <Label>Proposta de Meta Description</Label>
-          <Textarea
-            placeholder="Resposta de Meta Description"
-            className="h-52"
-            value={metaDescription.response}
-            onChange={(e) =>
-              setMetaDescription({
-                ...metaDescription,
-                response: e.target.value,
-              })
-            }
+          <PromptTemplate
+            state={costBenefit}
+            setState={setCostBenefit}
+            stateKey="costBenefit"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
-          <Label>Prompt de Pros</Label>
-          <Textarea
-            placeholder="Prompt de Pros"
-            className="h-52 bg-secondary"
-            value={pros.prompt}
-            onChange={(e) =>
-              setPros({
-                ...pros,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
+          <PromptTemplate
+            state={customerExperience}
+            setState={setCustomerExperience}
+            stateKey="customerExperience"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
-          <LoadingButton
-            text="Criar PROS"
-            action={() => handleKey(pros, "pros")}
-            loadingState={pros}
-            setLoadingState={setPros}
-            loadingText="Gerando..."
+          <PromptTemplate
+            state={finalConsiderations}
+            setState={setFinalConsiderations}
+            stateKey="finalConsiderations"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
-          <Label>Proposta de Pros</Label>
-          <Textarea
-            placeholder="Resposta de Pros"
-            className="h-52"
-            value={pros.response}
-            onChange={(e) =>
-              setPros({
-                ...pros,
-                response: e.target.value,
-              })
-            }
-          />
-          <div>
-            <ul
-              className="flex flex-col gap-1 text-xs"
-              dangerouslySetInnerHTML={{ __html: pros.response }}
-            ></ul>
-          </div>
-          <Label>Prompt de Cons</Label>
-          <Textarea
-            placeholder="Prompt de Cons"
-            className="h-52 bg-secondary"
-            value={cons.prompt}
-            onChange={(e) =>
-              setCons({
-                ...cons,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
-          />
-          <LoadingButton
-            text="Criar CONS"
-            action={() => handleKey(cons, "cons")}
-            loadingState={cons}
-            setLoadingState={setCons}
-            loadingText="Gerando..."
-          />
-          <Label>Proposta de Cons</Label>
-          <Textarea
-            placeholder="Resposta de Cons"
-            className="h-52"
-            value={cons.response}
-            onChange={(e) =>
-              setCons({
-                ...cons,
-                response: e.target.value,
-              })
-            }
-          />
-          <Label>Prompt de Custo Benefício</Label>
-          <Textarea
-            placeholder="Prompt de Custo Benefício"
-            className="h-52 bg-secondary"
-            value={costBenefit.prompt}
-            onChange={(e) =>
-              setCostBenefit({
-                ...costBenefit,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
-          />
-          <LoadingButton
-            text="Criar Custo-Benefício"
-            action={() => handleKey(costBenefit, "costBenefit")}
-            loadingState={costBenefit}
-            setLoadingState={setCostBenefit}
-            loadingText="Gerando..."
-          />
-          <Label>Proposta de Custo Benefício</Label>
-          <Textarea
-            placeholder="Resposta de Custo Benefício"
-            className="h-52"
-            value={costBenefit.response}
-            onChange={(e) =>
-              setCostBenefit({
-                ...costBenefit,
-                response: e.target.value,
-              })
-            }
-          />
-          <Label>Prompt de Custo Experiência do cliente</Label>
-          <Textarea
-            placeholder="Prompt de uX"
-            className="h-52 bg-secondary"
-            value={customerExperience.prompt}
-            onChange={(e) =>
-              setCustomerExperience({
-                ...customerExperience,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
-          />
-          <LoadingButton
-            text="Criar uX"
-            action={() => handleKey(customerExperience, "customerExperience")}
-            loadingState={customerExperience}
-            setLoadingState={setCustomerExperience}
-            loadingText="Gerando..."
-          />
-          <Label>Proposta de Experiência do Cliente</Label>
-          <Textarea
-            placeholder="Resposta de uX"
-            className="h-52"
-            value={customerExperience.response}
-            onChange={(e) =>
-              setCustomerExperience({
-                ...customerExperience,
-                response: e.target.value,
-              })
-            }
-          />
-          <Label>Prompt de Conclusão</Label>
-          <Textarea
-            placeholder="Prompt de conclusão"
-            className="h-52 bg-secondary"
-            value={finalConsiderations.prompt}
-            onChange={(e) =>
-              setFinalConsiderations({
-                ...finalConsiderations,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
-          />
-          <LoadingButton
-            text="Criar conclusão"
-            action={() => handleKey(finalConsiderations, "finalConsiderations")}
-            loadingState={finalConsiderations}
-            setLoadingState={setFinalConsiderations}
-            loadingText="Gerando..."
-          />
-          <Label>Proposta de Conclusão</Label>
-          <Textarea
-            placeholder="Resposta de conclusão"
-            className="h-52"
-            value={finalConsiderations.response}
-            onChange={(e) =>
-              setFinalConsiderations({
-                ...finalConsiderations,
-                response: e.target.value,
-              })
-            }
-          />
-          <Label>Prompt de Keywords</Label>
-          <Textarea
-            placeholder="Prompt de keywords"
-            className="h-52 bg-secondary"
-            value={keywords.prompt}
-            onChange={(e) =>
-              setKeywords({
-                ...keywords,
-                prompt: e.target.value,
-              })
-            }
-            readOnly
-          />
-          <LoadingButton
-            text="Criar keywords"
-            action={() => handleKey(keywords, "keywords")}
-            loadingState={keywords}
-            setLoadingState={setKeywords}
-            loadingText="Gerando..."
-          />
-          <Label>Proposta de Keywords</Label>
-          <Textarea
-            placeholder="Resposta de keywords"
-            className="h-52"
-            value={keywords.response}
-            onChange={(e) =>
-              setKeywords({
-                ...keywords,
-                response: e.target.value,
-              })
-            }
+          <PromptTemplate
+            state={keywords}
+            setState={setKeywords}
+            stateKey="keywords"
+            fetchPrompt={fetchPrompts}
+            form={form}
           />
         </div>
       </CardContent>
+      <CardFooter className="w-full">
+        <Button onClick={handleSubmit} className="w-full">
+          Criar Review
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

@@ -102,6 +102,7 @@ export const fetchAI = async (
         if (line.trim().startsWith("{") && line.trim().endsWith("}")) {
           // Check if the line looks like a JSON object
           const json = JSON.parse(line);
+          console.log(line);
           if (json.response) {
             result += json.response;
           }

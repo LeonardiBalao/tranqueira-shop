@@ -5,12 +5,14 @@ declare global {
     price: string;
     rating: string;
   };
-  interface Product {
+  interface Form {
     name: string;
     discount: string;
     price: string;
     imageAlt: string;
     imageSrc: string;
+    imageAlt2: string;
+    imageSrc2: string;
     videoSrc?: string;
     categoryOne: string;
     categoryTwo: string;
@@ -24,7 +26,6 @@ declare global {
   interface PromptState {
     prompt: string;
     response: string;
-    loading: boolean;
   }
 
   interface States {
@@ -36,6 +37,12 @@ declare global {
     costBenefit: PromptState;
     finalConsiderations: PromptState;
     keywords: PromptState;
+  }
+
+  interface RequiredPrompts {
+    cons?: string;
+    pros?: string;
+    costBenefit?: string;
   }
 }
 

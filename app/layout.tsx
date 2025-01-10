@@ -4,10 +4,12 @@ import { ThemeProvider } from "next-themes";
 import { Montserrat as FontSans } from "next/font/google";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
-import { Book, LayoutDashboard, User } from "lucide-react";
+import { Book, LayoutDashboard } from "lucide-react";
 import { auth } from "@/server/auth";
 import { ROLE } from "@prisma/client";
 import PanelLinks from "@/components/structure/panel-links";
+import Image from "next/image";
+import logo from "@/public/logo.png";
 
 export const metadata: Metadata = {
   title: "Tranqueira Shop",
@@ -27,8 +29,7 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   const userLinks = [
-    { href: "/", label: "Home", icon: <LayoutDashboard size={16} /> },
-    { href: "/painel/usuario", label: "Usuário", icon: <User size={16} /> },
+    { href: "/", label: "Página Inicial", icon: <LayoutDashboard size={16} /> },
   ];
   const adminLinks =
     session?.user.role === ROLE.ADMIN
@@ -57,6 +58,13 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Image
+            alt="logo"
+            src={logo}
+            width={150}
+            height={150}
+            className="mt-4"
+          />
           <PanelLinks allLinks={allLinks} />
           {children}
         </ThemeProvider>

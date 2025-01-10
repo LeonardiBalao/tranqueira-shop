@@ -1,12 +1,12 @@
 import CarouselHero from "@/components/structure/carousel-hero";
-import SearchBar from "@/components/structure/search-bar";
+import { Combobox } from "@/components/structure/combobox";
 import { getReviews } from "@/server/actions/get-reviews";
 
 export default async function Home() {
   const allReviews = await getReviews();
   return (
     <>
-      <SearchBar className="mb-8" />
+      <Combobox allReviews={allReviews} />
       <CarouselHero allReviews={allReviews} />
     </>
   );

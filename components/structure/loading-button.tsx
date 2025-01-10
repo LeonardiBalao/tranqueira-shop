@@ -21,7 +21,7 @@ interface LoadingButtonProps {
     | undefined;
   loadingState: PromptState;
   setLoadingState: (state: PromptState) => void;
-  action?: () => void;
+  action?: () => Promise<void> | void;
 }
 
 export default function LoadingButton({
