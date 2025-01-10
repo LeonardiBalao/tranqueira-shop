@@ -72,11 +72,3 @@ export function removeFormatting(text: string): string {
     .replaceAll("-", "")
     .trim();
 }
-
-export const translatePrompt = async (prompt: string, promptType: string) => {
-  const translation = await fetchAI(
-    `Translate the following text to Brazilian Portuguese: ${prompt}`,
-    promptType
-  );
-  return translation;
-};
