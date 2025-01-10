@@ -1,7 +1,7 @@
 const apiURL =
   process.env.NODE_ENV === "production"
     ? "https://tranqueira.shop"
-    : "http://147.79.82.202";
+    : "http://147.79.82.202:11434";
 
 export function generateSlug(text: string): string {
   const accentsMap = new Map<string, string>([
