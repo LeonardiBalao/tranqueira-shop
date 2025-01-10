@@ -141,5 +141,5 @@ export const fetchServerAI = async (
   prompt: string | undefined,
   type: string | undefined
 ) => {
-  return fetchAI(prompt, type);
+  return await fetchAI(prompt, type);
 };
