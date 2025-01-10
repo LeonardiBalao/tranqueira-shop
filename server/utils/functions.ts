@@ -1,7 +1,7 @@
 const apiUrl =
   process.env.NODE_ENV === "production"
-    ? "https://localhost"
-    : "https://147.79.82.202";
+    ? "http://localhost"
+    : "http://147.79.82.202";
 
 export function generateSlug(text: string): string {
   const accentsMap = new Map<string, string>([
