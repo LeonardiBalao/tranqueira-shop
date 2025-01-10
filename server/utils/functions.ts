@@ -1,6 +1,6 @@
 const apiURL =
   process.env.NODE_ENV === "production"
-    ? "http://localhost"
+    ? "https://tranqueira.shop"
     : "http://147.79.82.202";
 
 export function generateSlug(text: string): string {
@@ -100,7 +100,6 @@ export const fetchAI = async (
 
   const response = await fetch(url, {
     method: "POST",
-    credentials: "include",
     referrerPolicy: "unsafe-url",
     headers: {
       "Content-Type": "application/json",
