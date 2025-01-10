@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { fetchServerAI } from "@/server/utils/functions";
+import { fetchServerAI } from "@/server/actions/create-review";
 import { useState } from "react";
 import { toast } from "sonner";
 

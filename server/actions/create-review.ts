@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/prisma/db";
-import { generateSlug, removeFormatting } from "../utils/functions";
+import { fetchAI, generateSlug, removeFormatting } from "../utils/functions";
 import Decimal from "decimal.js";
 
 const getPrompt = (
@@ -123,4 +123,11 @@ export const getInitialPrompts = async (
   };
 
   return prompt;
+};
+
+export const fetchServerAI = async (
+  prompt: string | undefined,
+  type: string | undefined
+) => {
+  return await fetchAI(prompt, type);
 };

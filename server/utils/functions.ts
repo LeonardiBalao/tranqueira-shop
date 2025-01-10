@@ -136,10 +136,3 @@ export const translatePrompt = async (prompt: string, promptType: string) => {
   );
   return translation;
 };
-
-export const fetchServerAI = async (
-  prompt: string | undefined,
-  type: string | undefined
-) => {
-  return await fetchAI(prompt, type);
-};
