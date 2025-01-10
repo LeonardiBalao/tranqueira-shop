@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { fetchServerAI } from "@/server/actions/create-review";
+import { fetchAI } from "@/server/utils/functions";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -79,7 +79,7 @@ export default function PromptTemplate({
         break;
     }
     setDisabled(true);
-    const response = await fetchServerAI(state.prompt, stateKey);
+    const response = await fetchAI(state.prompt, stateKey);
     console.log(response);
     setState({ ...state, response });
     setDisabled(false);
