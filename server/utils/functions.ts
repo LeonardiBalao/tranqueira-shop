@@ -1,3 +1,8 @@
+const apiURL =
+  process.env.NODE_ENV === "production"
+    ? "http://localhost"
+    : "http://147.79.82.202";
+
 export function generateSlug(text: string): string {
   const accentsMap = new Map<string, string>([
     ["á", "a"],
@@ -87,7 +92,7 @@ export const fetchAI = async (
 ) => {
   if (prompt === undefined || type === undefined) return "";
   console.log(`Gerando ${type}`);
-  const url = `http://147.79.82.202:11434/api/generate`;
+  const url = `${apiURL}:11434/api/generate`;
   const promptData = {
     model: "qwen2.5:14b",
     prompt,
