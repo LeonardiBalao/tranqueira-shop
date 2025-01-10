@@ -21,7 +21,7 @@ interface SingleReviewProps {
 
 export default async function SingleReviewPage({ params }: SingleReviewProps) {
   if (!params) return redirect("/");
-  const { categoryOne, categoryTwo, categoryThree, title } = await params;
+  const { categoryOne, categoryTwo, categoryThree, title } = params;
   const review = await getReview(
     categoryOne,
     categoryTwo,
