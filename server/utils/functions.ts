@@ -95,6 +95,8 @@ export const fetchAI = async (
 
   const response = await fetch(url, {
     method: "POST",
+    credentials: "include",
+    referrerPolicy: "unsafe-url",
     headers: {
       "Content-Type": "application/json",
     },
