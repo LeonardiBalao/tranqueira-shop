@@ -114,9 +114,9 @@ export const getInitialPrompts = async (
   const prompt = {
     title: getPrompt("title", form),
     metaDescription: getPrompt("metaDescription", form),
-    finalConsiderations: getPrompt("finalConsiderations", form),
     pros: getPrompt("pros", form),
     cons: getPrompt("cons", form),
+    finalConsiderations: getPrompt("finalConsiderations", form),
     costBenefit: getPrompt("costBenefit", form, requiredPrompts),
     customerExperience: getPrompt("customerExperience", form, requiredPrompts),
     keywords: getPrompt("keywords", form, requiredPrompts),
