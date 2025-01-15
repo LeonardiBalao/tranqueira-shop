@@ -9,19 +9,18 @@ const getPrompt = (
   form: Form,
   requiredPrompts?: RequiredPrompts
 ) => {
-  const promptTitle = `Apenas texto, sem formatação ou mensagens adicionais. Crie um título incrivelmente atrativo para uma postagem de review de produto na Shopee. O título deve ser uma pergunta altamente apelativa que desperte extrema curiosidade e vontade de clicar.
-
+  const promptTitle = `Sem firulas! Crie um título bombástico e super chamativo, no formato de pergunta, que desperte MUITA curiosidade para clicar na review de um produto da Shopee.  
+ 
   Nome do produto: ${form.name}.
-  
-  Inspire-se nos seguintes exemplos e adeque ao caso concreto:
-  - É Tudo Isso Mesmo? Minha Experiência Real com o [Nome do Produto]
-  - Antes de Comprar o [Nome do Produto], Leia Isso!
-  - O [Nome do Produto] Vale Mesmo a Pena? Descubra!
-  - Não Compre o [Nome do Produto] Sem Ler Esta Review!
-  - Por Que Todo Mundo Está Falando do [Nome do Produto]?
-  - O [Nome do Produto] Entrega o Que Promete? Veja Agora!
-  
-  Responda apenas com o título mais impactante e chamativo que você criar.`;
+   
+  Inspire-se nos exemplos abaixo e adapte ao caso:  
+  - É Bom Mesmo ou Pura Enganação? Testei o [Nome do Produto]!  
+  - Antes de Comprar o [Nome do Produto], Você Precisa Saber Isso!  
+  - Vale a Grana ou é Furada? O [Nome do Produto] na Real...  
+  - Comprei o [Nome do Produto] e Me Surpreendi! Leia Antes!  
+  - Todo Mundo Tá Falando do [Nome do Produto]... Mas Por Quê?  
+   
+  Responda com um título irresistível, de até 60 caracteres.`;
 
   const promptMetaDescription = `Apenas texto, sem formatação ou mensagens adicionais. Crie uma descrição breve e altamente atrativa para um produto da Shopee, destacando suas funcionalidades e benefícios. A resposta deve ser clara, objetiva e conter no máximo 150 caracteres, com até 3 frases curtas. Use as seguintes informações:
 
@@ -38,11 +37,11 @@ const getPrompt = (
 
   const promptCons = `Apenas texto, sem formatação ou mensagens adicionais. Liste os pontos negativos de um produto da Shopee de forma direta, sincera e objetiva. Separe cada item com ";". Destaque possíveis limitações ou inconvenientes sem exageros, usando as seguintes informações:
 
-  - Preço: ${form.price}
   - Descrição: ${form.description}`;
 
   const promptFinalConsiderations = `Apenas texto, sem formatação ou mensagens adicionais. Crie uma conclusão direta e objetiva da review, indicando para quem o produto é mais adequado e trazendo uma análise final baseada nos seguintes dados:
 
+  - Nome: ${form.name}
   - Nota do produto: ${form.rating} (de 1 a 5)
   - Quantidade de reviews: ${form.reviewsAmount}
   - Quantidade de pedidos: ${form.ordersAmount}
@@ -66,7 +65,14 @@ const getPrompt = (
   - Pontos positivos: ${requiredPrompts?.pros}
   - Pontos negativos: ${requiredPrompts?.cons}`;
 
-  const promptKeywords = `Não crie formatação de texto, apenas frases em formato de pergunta. Gere respostas em PT-BR. Responda apenas com o que foi pedido, sem mensagens introdutórias ou adicionais. Crie uma lista de perguntas curtas que usuários fariam em motores de busca ao procurar por um produto similar ao descrito abaixo, utilizando técnicas atuais de Search Query. As perguntas devem ser baseadas nas seguintes informações do produto: Nome: \n${form.name}, \nDescrição: ${form.description}, \nPontos Positivos: ${requiredPrompts?.pros}, \nPontos Negativos: ${requiredPrompts?.cons}, \nCusto-Benefício: ${requiredPrompts?.costBenefit}. A resposta deve ser uma lista de perguntas curtas separadas por ponto e vírgula. Por favor, gere pelo menos 15 perguntas.`;
+  const promptKeywords = `Sem firulas! Crie uma lista de pelo menos 15 perguntas curtas e diretas que usuários fariam em motores de busca ao procurar por um produto similar ao descrito abaixo. Use técnicas atuais de Search Query e gere as perguntas em PT-BR, separadas por ponto e vírgula. Responda apenas com as perguntas, sem mensagens adicionais.  
+ 
+  Informações do produto:  
+  - Nome: ${form.name}  
+  - Descrição: ${form.description}  
+  - Pontos Positivos: ${requiredPrompts?.pros}  
+  - Pontos Negativos: ${requiredPrompts?.cons}  
+  - Custo-Benefício: ${requiredPrompts?.costBenefit}`;
 
   switch (type) {
     case "title":

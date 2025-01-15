@@ -1,6 +1,49 @@
 import SingleReview from "@/components/structure/single-review";
 import { getReview } from "@/server/actions/get-review";
 import Aside from "@/components/structure/aside";
+import { Metadata } from "next";
+import prisma from "@/prisma/db";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    categoryOne: string;
+    categoryTwo: string;
+    categoryThree: string;
+    title: string;
+  }>;
+}): Promise<Metadata> {
+  const { categoryOne, categoryTwo, categoryThree, title } = await params;
+  const review = await prisma.review.findFirst({
+    where: {
+      categoryOneSlug: categoryOne,
+      categoryTwoSlug: categoryTwo,
+      categoryThreeSlug: categoryThree,
+      titleSlug: title,
+    },
+  });
+
+  return {
+    title: `${review?.title}`,
+    description: `${review?.metaDescription}`,
+    keywords: review?.keywords,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+    authors: [
+      {
+        name: "Tranqueira Shop",
+        url: "https://tranqueira.shop",
+      },
+    ],
+  };
+}
 
 export default async function SingleReviewPage({
   params,
