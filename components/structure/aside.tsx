@@ -11,9 +11,9 @@ export default function Aside({ className }: AsideProps) {
     <aside className={cn("flex flex-col gap-4", className)}>
       <h2 className={cn("font-bold")}>Nunca comprou na Shopee?</h2>
       <p>
-        Mais resumido, metade do tamanho Comprar na Shopee é sinônimo de
-        confiança e praticidade. A plataforma garante segurança nas transações e
-        entrega rápida, priorizando a satisfação do cliente. 📦✨
+        Comprar na Shopee é sinônimo de confiança e praticidade. A plataforma
+        garante segurança nas transações e entrega rápida, priorizando a
+        satisfação do cliente. 📦✨
       </p>
     </aside>
   );
