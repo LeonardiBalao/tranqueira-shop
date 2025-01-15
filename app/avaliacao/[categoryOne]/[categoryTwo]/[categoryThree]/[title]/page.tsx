@@ -1,13 +1,5 @@
 import SingleReview from "@/components/structure/single-review";
 import { getReview } from "@/server/actions/get-review";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import Aside from "@/components/structure/aside";
 
 export default async function SingleReviewPage({
