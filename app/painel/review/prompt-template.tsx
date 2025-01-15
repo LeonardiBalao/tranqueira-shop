@@ -105,7 +105,9 @@ export default function PromptTemplate({
           }
           readOnly
         />
-        <Label>Proposta de {stateKey}</Label>
+        <Label>
+          Proposta de {stateKey} - {state.response.split("").length} caracteres
+        </Label>
         <Textarea
           placeholder={`Resposta de ${stateKey}`}
           className="h-52"

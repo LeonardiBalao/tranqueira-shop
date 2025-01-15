@@ -32,23 +32,6 @@ export default async function SingleReviewPage({
   if (!review) return <div>Não encontrado</div>;
   return (
     <main className="container mx-auto px-8 md:px-0 flex flex-col gap-4 items-center my-8">
-      <nav className="mr-auto">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/components">Components</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </nav>
       <article className="container max-w-screen-lg">
         <section className="flex flex-col md:flex-row md:gap-8">
           <SingleReview review={review} />

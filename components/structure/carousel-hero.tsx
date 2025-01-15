@@ -55,7 +55,9 @@ export default function CarouselHero({ allReviews }: CarouselHeroProps) {
           {allReviews.map((review: ReviewWithPriceAndRatingAsString, index) => (
             <CarouselItem
               key={index}
-              className={cn(orientation === "vertical" ? "" : "basis-1/3")}
+              className={cn(
+                orientation === "vertical" ? "basis-1/3" : "basis-1/3"
+              )}
             >
               <CarouselReview review={review} />
             </CarouselItem>

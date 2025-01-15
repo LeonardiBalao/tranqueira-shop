@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { Montserrat as FontSans } from "next/font/google";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
-import { Book, LayoutDashboard } from "lucide-react";
+import { Book, LayoutDashboard, Newspaper } from "lucide-react";
 import { auth } from "@/server/auth";
 import { ROLE } from "@prisma/client";
 import PanelLinks from "@/components/structure/panel-links";
@@ -29,7 +29,7 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   const userLinks = [
-    { href: "/", label: "Página Inicial", icon: <LayoutDashboard size={16} /> },
+    { href: "/", label: "Avaliações", icon: <Newspaper size={16} /> },
   ];
   const adminLinks =
     session?.user.role === ROLE.ADMIN

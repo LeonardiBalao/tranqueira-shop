@@ -4,10 +4,11 @@ import { getReviews } from "@/server/actions/get-reviews";
 
 export default async function Home() {
   const allReviews = await getReviews();
+  const reversedReviews = allReviews.reverse();
   return (
     <>
       <Combobox allReviews={allReviews} />
-      <CarouselHero allReviews={allReviews} />
+      <CarouselHero allReviews={reversedReviews} />
     </>
   );
 }

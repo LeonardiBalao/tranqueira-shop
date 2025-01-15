@@ -13,7 +13,7 @@ export default function Rating({ review }: RatingProps) {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
   return (
     <div className="flex gap-1 items-center">
-      <Badge className="flex gap-1">
+      <Badge className="flex gap-1 h-8">
         {Array(fullStars)
           .fill(null)
           .map((_, index) => (
@@ -27,10 +27,10 @@ export default function Rating({ review }: RatingProps) {
           ))}
         {review.rating}
       </Badge>
-      <Badge variant={"outline"} className="text-xs gap-1">
+      <Badge variant={"outline"} className="text-xs gap-1 h-8">
         {review.ordersAmount}+ vendas
       </Badge>
-      <Badge variant={"outline"} className="text-xs gap-1">
+      <Badge variant={"outline"} className="text-xs gap-1 h-8">
         {review.reviewsAmount}+ avaliações
       </Badge>
     </div>

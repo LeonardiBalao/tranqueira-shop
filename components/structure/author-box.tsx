@@ -2,6 +2,7 @@
 
 import { Facebook, Instagram, User, Youtube } from "lucide-react";
 import { Badge } from "../ui/badge";
+import Link from "next/link";
 
 interface AuthorBoxProps {
   review: ReviewWithPriceAndRatingAsString;
@@ -21,9 +22,15 @@ export function AuthorBox({ review }: AuthorBoxProps) {
         {new Date(review.createdAt).toLocaleDateString()}
       </time>
       <div className="flex gap-4 items-center">
-        <Facebook fill="blue" size={21} />
-        <Instagram fill="orange" size={21} />
-        <Youtube fill="red" size={28} />
+        <Link href="https://www.facebook.com/shop.tranqueira" target="_blank">
+          <Facebook fill="blue" size={21} />
+        </Link>
+        <Link href="https://www.instagram.com/tranqueira.shop" target="_blank">
+          <Instagram fill="orange" size={21} />
+        </Link>
+        <Link href={"https://www.youtube.com/@tranqueira_shop"} target="_blank">
+          <Youtube fill="red" size={28} />
+        </Link>
       </div>
     </div>
   );

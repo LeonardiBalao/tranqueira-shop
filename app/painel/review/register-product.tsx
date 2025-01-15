@@ -319,6 +319,13 @@ export default function RegisterProductCard({
             form={form}
           />
           <PromptTemplate
+            state={finalConsiderations}
+            setState={setFinalConsiderations}
+            stateKey="finalConsiderations"
+            fetchPrompt={fetchPrompts}
+            form={form}
+          />
+          <PromptTemplate
             state={costBenefit}
             setState={setCostBenefit}
             stateKey="costBenefit"
@@ -329,13 +336,6 @@ export default function RegisterProductCard({
             state={customerExperience}
             setState={setCustomerExperience}
             stateKey="customerExperience"
-            fetchPrompt={fetchPrompts}
-            form={form}
-          />
-          <PromptTemplate
-            state={finalConsiderations}
-            setState={setFinalConsiderations}
-            stateKey="finalConsiderations"
             fetchPrompt={fetchPrompts}
             form={form}
           />

@@ -18,7 +18,7 @@ export default function SingleReview({ review }: SingleReviewProps) {
   return (
     <div className="flex flex-col gap-4 md:gap-4 flex-wrap w-full single-review">
       <h1 className="text-lg md:text-3xl font-bold">{review.title}</h1>
-      <p className="text-sm">{review.metaDescription}.</p>
+      <p className="text-sm leading-3">{review.metaDescription}.</p>
       <Rating review={review} />
       <div className="w-full">
         <AspectRatio ratio={16 / 9}>
@@ -47,7 +47,7 @@ export default function SingleReview({ review }: SingleReviewProps) {
         <h2 className="font-bold text-red-600">Pontos negativos</h2>
         <ul>
           {review.cons.map((con, index) => (
-            <li key={index}>{con}</li>
+            <li key={index}>{con.slice(0, 1).toUpperCase() + con.slice(1)}</li>
           ))}
         </ul>
       </section>
@@ -64,7 +64,7 @@ export default function SingleReview({ review }: SingleReviewProps) {
       <p>{review.finalConsiderations}</p>
       <Link href={review.affiliateLink}>
         <Button className="w-full" size={"lg"}>
-          Ver produto ma Shopee
+          Ir para o produto
         </Button>
       </Link>
     </div>
