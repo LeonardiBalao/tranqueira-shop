@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { Montserrat as FontSans } from "next/font/google";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
-import { Book, Newspaper } from "lucide-react";
+import { Book } from "lucide-react";
 import { auth } from "@/server/auth";
 import { ROLE } from "@prisma/client";
 import PanelLinks from "@/components/structure/panel-links";
