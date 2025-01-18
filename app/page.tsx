@@ -1,5 +1,5 @@
 import CarouselHero from "@/components/structure/carousel-hero";
-import { Combobox } from "@/components/structure/combobox";
+import { SearchReview } from "@/components/structure/search-review";
 import { getReviews } from "@/server/actions/get-reviews";
 
 export default async function Home() {
@@ -7,7 +7,7 @@ export default async function Home() {
   const reversedReviews = allReviews.reverse();
   return (
     <>
-      <Combobox allReviews={allReviews} />
+      <SearchReview allReviews={allReviews} />
       <CarouselHero allReviews={reversedReviews} />
     </>
   );

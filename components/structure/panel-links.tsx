@@ -14,7 +14,7 @@ interface PanelLinksProps {
 export default function PanelLinks({ allLinks }: PanelLinksProps) {
   return (
     <nav>
-      <ul className="flex gap-4 my-4">
+      <ul className="flex gap-4 mt-4">
         {allLinks.map((link) => (
           <li key={link.href}>
             <Link href={link.href} className="flex gap-2 items-center">

@@ -23,7 +23,7 @@ interface ComboboxProps {
   allReviews: ReviewWithPriceAndRatingAsString[];
 }
 
-export function Combobox({ allReviews }: ComboboxProps) {
+export function SearchReview({ allReviews }: ComboboxProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -38,18 +38,18 @@ export function Combobox({ allReviews }: ComboboxProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[90%] md:w-[500px] mx-auto my-4"
+          className="w-[300px] md:w-[500px] mx-auto my-4 bg-secondary border-none"
         >
           {value
             ? allReviews.find(
                 (review: ReviewWithPriceAndRatingAsString) =>
                   review.name === value
               )?.name
-            : "Procure o produto..."}
+            : "Procurar produto..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[90%] mx-auto flex md:w-[500px] p-0">
+      <PopoverContent className="w-[300px] mx-auto flex md:w-[500px] p-0">
         <Command>
           <CommandInput placeholder="Procure o produto..." className="h-9" />
           <CommandList>

@@ -10,6 +10,7 @@ import { ROLE } from "@prisma/client";
 import PanelLinks from "@/components/structure/panel-links";
 import Image from "next/image";
 import logo from "@/public/logo.png";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Tranqueira Shop",
@@ -28,9 +29,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const userLinks = [
-    { href: "/", label: "Avaliações", icon: <Newspaper size={16} /> },
-  ];
   const adminLinks =
     session?.user.role === ROLE.ADMIN
       ? [
@@ -42,7 +40,7 @@ export default async function RootLayout({
         ]
       : [];
 
-  const allLinks = [...userLinks, ...adminLinks];
+  const allLinks = [...adminLinks];
 
   return (
     <html lang="pt-BR" suppressHydrationWarning>
@@ -58,15 +56,18 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Image
-            alt="logo"
-            src={logo}
-            width={150}
-            height={150}
-            className="mt-4"
-            unoptimized
-          />
+          <Link href={"/"}>
+            <Image
+              alt="logo"
+              src={logo}
+              width={150}
+              height={150}
+              className="mt-4"
+              unoptimized
+            />
+          </Link>
           <PanelLinks allLinks={allLinks} />
+
           {children}
         </ThemeProvider>
         <Toaster richColors />

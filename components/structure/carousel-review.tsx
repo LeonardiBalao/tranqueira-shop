@@ -19,7 +19,7 @@ interface ReviewProps {
 export default function CarouselReview({ review }: ReviewProps) {
   return (
     <>
-      <Card>
+      <Card className="md:w-auto">
         <CardHeader>
           <div className="bg-secondary text-center font-bold text-sm text-gray-500">
             {new Date(review.createdAt).toLocaleDateString()}
